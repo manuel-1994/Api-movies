@@ -1,7 +1,7 @@
 require('dotenv').config()
 const development = require('./development')
 
-const currentConfig = development
+const config = development
 
 
-module.exports = currentConfig ;
+module.exports = config ;
