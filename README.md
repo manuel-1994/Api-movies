@@ -1,2 +1,2 @@
 # Api-movies
-Aplicación back end desarrollada con Nojdejs y Express
+Aplicación back end de peliculas desarrollada con Nojdejs y Express

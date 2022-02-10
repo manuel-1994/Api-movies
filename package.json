@@ -1,0 +1,33 @@
+{
+  "name": "api-movies",
+  "version": "1.0.0",
+  "description": "Aplicación back end de peliculas desarrollada con Nojdejs y Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuel-1994/Api-movies.git"
+  },
+  "keywords": [],
+  "author": "Manuel marin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manuel-1994/Api-movies/issues"
+  },
+  "homepage": "https://github.com/manuel-1994/Api-movies#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
