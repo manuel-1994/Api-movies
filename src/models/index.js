@@ -1,8 +1,6 @@
-const UsersModel = require("./users/users.model")
-const UsersSchemaJoi = require("./users/usersSchemaJoi")
+const UsersModel = require("./users.model")
 
 
 module.exports = {
-  UsersModel,
-  UsersSchemaJoi
+  UsersModel
 }

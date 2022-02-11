@@ -1,4 +1,4 @@
-const { UsersSchemaJoi } = require("../models");
+const { UsersSchemaJoi } = require("../schemas");
 
 const validateData = (schema, req, res, next) =>{
   const isValid = schema.validate(req.body);
@@ -9,12 +9,12 @@ const validateData = (schema, req, res, next) =>{
       message: isValid.error.details[0].message
     });
   };
-  
+
   return next();
 
 };
 
-const validateUser = (req,res,next)=> validateData(UsersSchemaJoi,req,res,next)
+const validateUser = (req,res,next)=> validateData(UsersSchemaJoi,req,res,next);
 
 module.exports ={
   validateUser
