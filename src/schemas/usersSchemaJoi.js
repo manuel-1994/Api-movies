@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const UsersSchemaJoi = Joi.object({
+const usersSchemaJoi = Joi.object({
   firstName: Joi.string().required().max(30),
   lastName: Joi.string().required().max(30),
   email: Joi.string().email().required().max(256),
@@ -8,4 +8,4 @@ const UsersSchemaJoi = Joi.object({
   role: Joi.number().min(0).max(2)
 })
 
-module.exports = UsersSchemaJoi
+module.exports = usersSchemaJoi

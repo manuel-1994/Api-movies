@@ -1,4 +1,4 @@
-const { UsersSchemaJoi } = require("../schemas");
+const { usersSchemaJoi, movieSchemaJoi } = require("../schemas");
 
 const validateData = (schema, req, res, next) =>{
   const isValid = schema.validate(req.body);
@@ -14,8 +14,10 @@ const validateData = (schema, req, res, next) =>{
 
 };
 
-const validateUser = (req,res,next)=> validateData(UsersSchemaJoi,req,res,next);
+const validateUser = (req,res,next)=> validateData(usersSchemaJoi,req,res,next);
+const validateMovie = (req,res,next)=> validateData(movieSchemaJoi,req,res,next);
 
 module.exports ={
-  validateUser
+  validateUser,
+  validateMovie
 }
