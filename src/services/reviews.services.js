@@ -10,7 +10,7 @@ class Reviews{
   }
 
   async create (data){ 
-    const isReview = await this.#validateReview(data.authorId)
+    const isReview = await this.#validateReview(data)
     if(isReview.success){
       const saveData = await ReviewsModel.create(data)
       return {data: saveData, success:true, message: 'comentario creado exitosamente'}
@@ -28,13 +28,20 @@ class Reviews{
     return {data: deleteData, success:true, message: 'Comentario eliminado exitosamente'}
   }
 
-  async #validateReview (authorId){
-    const isReview = await this.get({authorId})
+  async #validateReview (data){
+    const reviews = await this.getAll({mediaId: data.mediaId})
+    let isReview;
+
+    reviews.forEach(review => {
+        if(review.authorId === data.authorId){
+           isReview=true
+        }
+    });
     
-    if(isReview){
-      return {success: false, message:'Ya tiene un comentario registrado en esta pelicula'}
-    }
-    return {success: true, message: 'Comentario valido'}
+      if(isReview){
+        return {success: false, message:'Ya tiene un comentario registrado en esta pelicula'}
+      }
+      return {success: true, message: 'Comentario valido'} 
   }
 }
 module.exports = Reviews;
