@@ -1,6 +1,12 @@
 const MoviesModel = require("../models/movies.model");
+const  Users  = require("./users.services");
+const Reviews = require("./reviews.services");
 
 class Movies{
+  constructor(){
+    this.userService = new Users()
+    this.reviewsServices = new Reviews()
+  }
     
   async getAll (){
     return await MoviesModel.find({})
@@ -46,6 +52,65 @@ class Movies{
     }
 
     return {success: true, message: 'Pelicula valida'}
+  }
+
+  async #Stars(data, option){
+    const movie = await this.get({_id: data.mediaId})
+    switch (option) {
+      case 'add':
+        movie.stars += data.stars
+        movie.numberOfVotes++
+        break;
+      case 'sub':
+        movie.stars -= data.stars
+        movie.numberOfVotes--
+        break;
+      default:
+        const review = await this.reviewsServices.get({_id: data.reviewId})
+        let result;
+        
+        if(data.stars >= review.stars){
+          result = data.stars - review.stars
+          movie.stars += result
+        }else{
+          result = review.stars - data.stars
+          movie.stars -= result
+        }
+        break;
+    }
+    return await this.update(data.mediaId, movie)
+  }
+
+// reviews services
+
+  async getReviews(mediaId){
+    return await this.reviewsServices.getAll({mediaId})
+  }
+
+  async addReview(data){
+    const author = await this.userService.get({_id: data.authorId})   
+   
+    data.authorDetails = {
+      name: author.firstName,
+      email: author.email
+    };
+    const saveData = await this.reviewsServices.create(data)
+    if(saveData.success){
+      await this.#Stars(saveData.data, 'add')
+    }
+    
+    return saveData
+  }
+
+  async editReview(mediaId,reviewId,data){
+    await this.#Stars({...data,mediaId, reviewId})
+    return await this.reviewsServices.update(reviewId,data)
+  }
+
+  async deleteReview(reviewId){
+    const deleteData = await this.reviewsServices.delete(reviewId)
+    await this.#Stars(deleteData.data,'sub')
+    return deleteData
   }
 }
 
