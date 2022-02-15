@@ -13,7 +13,8 @@ const moviesSchema = new Schema({
   numberOfVotes: {
     type: Number,
     default: 0
-  }
+  },
+  createdBy: String
 })
 
 const MoviesModel = mongoose.model('movies', moviesSchema);

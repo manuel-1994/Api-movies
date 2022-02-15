@@ -1,9 +1,12 @@
-const Movies = require("./movies.services");
-const Reviews = require("./reviews.services");
-const Users = require("./users.services");
+const Auth = require("./auth.service");
+const Movies = require("./movies.service");
+const Reviews = require("./reviews.service");
+const Users = require("./users.service");
+
 
 module.exports = {
   Users,
   Movies,
-  Reviews
+  Reviews,
+  Auth
 }

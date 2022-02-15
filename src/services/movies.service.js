@@ -1,6 +1,6 @@
 const MoviesModel = require("../models/movies.model");
-const  Users  = require("./users.services");
-const Reviews = require("./reviews.services");
+const  Users  = require("./users.service");
+const Reviews = require("./reviews.service");
 
 class Movies{
   constructor(){
@@ -27,19 +27,28 @@ class Movies{
       return isMovie
   }
 
-  async update (id,data){
+  async update (id,data,user){
       const isMovie = await this.#validateMovie(data.title,id)
+      const {createdBy} = await this.get({_id:id})
+      
       if(isMovie.success){
-        const updateData = await MoviesModel.findByIdAndUpdate(id,data,{new:true})
-        return {data: updateData, success:true, message: 'Pelicula actualizada exitosamente'}
+        if(user._id === createdBy || user.role > 1){
+          const updateData = await MoviesModel.findByIdAndUpdate(id,data,{new:true})
+          return {data: updateData, success:true, message: 'Pelicula actualizada exitosamente'}
+        }
+        return {success: false, message: 'sin permisos'}
       }
 
       return isMovie;
   }
 
-  async delete (id){
-    const deleteData = await MoviesModel.findByIdAndDelete(id)
-    return {data: deleteData, success:true, message: 'Pelicula eliminada exitosamente'}
+  async delete (id,user){
+    const {createdBy} = await this.get({_id:id})
+    if(user._id === createdBy || user.role > 1){
+      const deleteData = await MoviesModel.findByIdAndDelete(id)
+      return {data: deleteData, success:true, message: 'Pelicula eliminada exitosamente'}
+    }
+    return {success: false, message: 'sin permisos'}
   }
 
   async #validateMovie (title,id){

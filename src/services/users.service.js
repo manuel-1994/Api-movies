@@ -14,10 +14,8 @@ class Users{
         const isEmailValid = await this.#validateEmail(data.email)
         
         if(isEmailValid.success){
-          //TODO: COLOCAR delete data.role en el servicio de auth
-          delete data.role
           const saveData = await UsersModel.create(data)
-          return {data: saveData, success:true, message: 'Usuario creado exitosamente'}
+          return {success:true, message: 'Usuario creado exitosamente',data: saveData}
         }
         return isEmailValid;
     }
@@ -27,7 +25,7 @@ class Users{
       
       if(isEmailValid.success){
         const updateData = await UsersModel.findByIdAndUpdate(id,data,{new:true})
-        return {data: updateData, success:true, message: 'Usuario actualizado exitosamente'}
+        return {success:true, message: 'Usuario actualizado exitosamente',data: updateData}
       }
       
       return isEmailValid
@@ -35,7 +33,7 @@ class Users{
 
     async delete (id){
       const deleteData = await UsersModel.findByIdAndDelete(id)
-      return {data: deleteData, success:true, message: 'Usuario eliminado exitosamente'}
+      return { success:true, message: 'Usuario eliminado exitosamente',data: deleteData}
     }
 
     async #validateEmail (email, id){

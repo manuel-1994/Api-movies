@@ -6,7 +6,8 @@ const movieSchemaJoi = Joi.object({
   overview: Joi.string(),
   releaseDate: Joi.date(),
   stars: Joi.number().min(0),
-  numberOfVotes: Joi.number().integer().min(0)
+  numberOfVotes: Joi.number().integer().min(0),
+  createdBy: Joi.string()
 })
 
 module.exports = movieSchemaJoi;
